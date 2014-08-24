@@ -1,107 +1,116 @@
 package com.infinimango.flux.world;
 
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.infinimango.flux.world.entity.AnimatedEntity;
+import com.infinimango.flux.world.entity.AnimatedItem;
 import com.infinimango.flux.world.entity.Creature;
 import com.infinimango.flux.world.entity.Entity;
 import com.infinimango.flux.world.entity.Item;
 import com.infinimango.flux.world.entity.Player;
-import com.infinimango.flux.world.tile.AnimatedTile;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class World {
-	// Lists of all entities handled by the World
 	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Creature> creatures = new ArrayList<Creature>();
 	public List<Item> items = new ArrayList<Item>();
-	public List<Player> players = new ArrayList<Player>();
+	public List<TileMap> tileMaps = new ArrayList<TileMap>();
 
-	Level level;
+	public Player player;
 
-	public void update(){
-		if (level != null) {
-			int startX = (Camera.getX() / level.getTileWidth()) - 1;
-			int startY = (Camera.getY() / level.getTileHeight()) - 1;
-			for (int y = startY; y < (startY + level.getHeight() + 1); y++) {
-				for (int x = startX; x < (startX + level.getHeight() + 1); x++) {
-					if (level.getTile(x, y) instanceof AnimatedTile) ((AnimatedTile) level.getTile(x, y)).update();
-				}
-			}
+	public void update() {
+		// Update tilemaps
+		for (TileMap tm : tileMaps) {
+			tm.update();
 		}
 
-		for (Player player : players) {
-			player.update(this);
+		// Update animated entities
+		for (Entity e : entities) {
+			if (e instanceof AnimatedEntity)
+				((AnimatedEntity) e).updateAnimation();
 		}
 
-		for(Creature creature : creatures){
-			creature.update(this);
+		// Update creatures
+		for (Creature c : creatures) {
+			c.update(this);
 		}
 
+		// Delete dead creatures
+		for (int c = 0; c < creatures.size(); c++) {
+			if (creatures.get(c).isDead())
+				creatures.remove(c);
+		}
+
+		// Update items
+		for (Item i : items) {
+			if (i instanceof AnimatedItem)
+				((AnimatedItem) i).updateAnimation();
+		}
+
+		// Delete items that have been picked up
 		for (int i = 0; i < items.size(); i++) {
-			Item item =  items.get(i);
-			if(item.isPickedUp()) {
+			if (items.get(i).isPickedUp())
 				items.remove(i);
-				continue;
-			}
-			for (Player player : players) {
-				if (player == null) continue;
-				if (player.intersects(item)) {
-					item.pickedUpBy(player);
-				}
-			}
 		}
-
-		Camera.update();
 	}
 
-	/**
-	 * Render all visible entities, Camera movement and tile animations.
-	 */
-	public void render(Graphics g){
-		if (level != null) level.render(g);
+	public void render(Graphics g) {
+		for (TileMap tm : tileMaps) {
+			tm.render(g);
+		}
 
-		for(Item item : items){
-			if(!item.isOnScreen()) continue;
+		for (Item item : items) {
+			if (!item.isOnScreen())
+				continue;
 			item.render(g);
 		}
 
-		for (Player player : players) {
-			if (player != null) player.render(g);
-		}
+		if (player != null)
+			player.render(g);
 
-		for(Creature creature : creatures){
-			if(!creature.isOnScreen()) continue;
+		for (Creature creature : creatures) {
+			if (!creature.isOnScreen())
+				continue;
 			creature.render(g);
 		}
 
-		for(Entity entity : entities){
-			if(!entity.isOnScreen()) continue;
+		for (Entity entity : entities) {
+			if (!entity.isOnScreen())
+				continue;
 			entity.render(g);
 		}
 	}
 
-	public void add(Entity entity){
-		if(entity instanceof Player){
-			players.add((Player) entity);
-		}else if(entity instanceof Creature){
-			creatures.add((Creature)entity);
-		}else if(entity instanceof Item){
-			items.add((Item)entity);
-		}else{
-			entities.add(entity);
-		}
+	public void add(Entity entity) {
+		entities.add(entity);
 	}
 
-	public void setLevel(Level level) {
-		this.level = level;
+	public void add(Creature creature) {
+		creatures.add(creature);
 	}
 
-	public Level getLevel() {
-		return level;
+	public void add(Item item) {
+		items.add(item);
 	}
 
-	public String getEntityString(){
-		return "World - E:" + entities.size() + " C:" + creatures.size() + " I:" + items.size() + " P:" + players.size();
+	public void add(Player player) {
+		this.player = player;
+	}
+
+	public String getEntityString() {
+		return "World - M:" + tileMaps.size() + " E:" + entities.size() + " C:"
+				+ creatures.size() + " I:" + items.size() + " P:"
+				+ (player != null);
+	}
+
+	/**
+	 * Sets a new player to the world.
+	 * 
+	 * @param player
+	 *            New player
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }
