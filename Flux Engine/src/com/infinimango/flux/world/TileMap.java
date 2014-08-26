@@ -64,6 +64,18 @@ public class TileMap {
 		}
 	}
 
+	public Tile getTile(int x, int y) {
+		return tile[x][y];
+	}
+
+	public Tile getTileAt(int x, int y) {
+		return tile[x / spacing][y / spacing];
+	}
+
+	public void setTile(int x, int y, Tile tile) {
+		this.tile[x][y] = tile;
+	}
+
 	public boolean collidesAt(int x, int y) {
 		return tile[x / spacing][y / spacing].collides();
 	}
