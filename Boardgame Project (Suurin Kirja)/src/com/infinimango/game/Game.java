@@ -26,7 +26,7 @@ public class Game extends com.infinimango.flux.Game {
 
 		display.create();
 
-		Game.setState(debug ? new MapEditor() : new SplashState());
+		Game.setState(new GameState());
 	}
 
 }
