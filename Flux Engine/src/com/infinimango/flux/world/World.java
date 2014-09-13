@@ -98,6 +98,10 @@ public class World {
 		this.player = player;
 	}
 
+	public void add(TileMap tileMap) {
+		tileMaps.add(tileMap);
+	}
+
 	public String getEntityString() {
 		return "World - M:" + tileMaps.size() + " E:" + entities.size() + " C:"
 				+ creatures.size() + " I:" + items.size() + " P:"

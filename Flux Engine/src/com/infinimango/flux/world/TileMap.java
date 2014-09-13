@@ -58,10 +58,13 @@ public class TileMap {
 	public void render(Graphics g) {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tile[x][y].render(Camera.getX() - x * spacing, Camera.getY()
-						- y * spacing, g);
+				tile[x][y].render(x * spacing, y * spacing, g);
 			}
 		}
+	}
+
+	public Tile[][] getTiles() {
+		return tile;
 	}
 
 	public Tile getTile(int x, int y) {

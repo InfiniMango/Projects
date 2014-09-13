@@ -1,6 +1,7 @@
 package com.infinimango.flux.graphics;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
@@ -79,6 +80,10 @@ public class SpriteSheet {
 		return sprites[y * (spriteImage.getWidth() / spriteWidth) + x];
 	}
 
+	public BufferedImage getSpriteAt(Point point) {
+		return getSpriteAt((int) point.getX(), (int) point.getY());
+	}
+
 	/**
 	 * Extracts multiple images from the sheet and puts the into an array.
 	 * 
@@ -131,6 +136,20 @@ public class SpriteSheet {
 	 */
 	public int getSpriteHeight() {
 		return spriteHeight;
+	}
+
+	public void addSprite(BufferedImage image) {
+		size++;
+		BufferedImage[] sprites2 = new BufferedImage[size];
+
+		for (int i = 0; i < size - 1; i++) {
+			sprites2[i] = sprites[i];
+		}
+
+		sprites2[size] = image;
+
+		sprites = new BufferedImage[size];
+		sprites = sprites2.clone();
 	}
 
 }
