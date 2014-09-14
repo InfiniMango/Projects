@@ -57,13 +57,25 @@ public class MapEditor extends State {
 			currentId = maxId;
 
 		if (!mouseLeft && Mouse.buttonDown(Mouse.LEFT)) {
-			data[Mouse.getX() / (H_SPACING)][Mouse.getY() / (V_SPACING)] = currentId;
+			int x2 = Mouse.getX() / (H_SPACING);
+			int y2 = Mouse.getY() / (V_SPACING);
+			if (x2 >= WIDTH)
+				return;
+			if (y2 >= HEIGHT)
+				return;
+			data[x2][y2] = currentId;
 			mouseLeft = true;
 		}
 
 		if (!q && Keyboard.isKeyDown(KeyEvent.VK_Q)) {
-			special[Mouse.getX() / (H_SPACING)][Mouse.getY() / (V_SPACING)] = !special[Mouse
-					.getX() / (H_SPACING)][Mouse.getY() / (V_SPACING)];
+			int x2 = Mouse.getX() / (H_SPACING);
+			int y2 = Mouse.getY() / (V_SPACING);
+			if (x2 >= WIDTH)
+				return;
+			if (y2 >= HEIGHT)
+				return;
+			special[x2][y2] = !special[Mouse.getX() / (H_SPACING)][Mouse.getY()
+					/ (V_SPACING)];
 			q = true;
 		}
 
