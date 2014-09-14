@@ -35,7 +35,7 @@ public class MapEditor extends State {
 			new Color(142, 214, 246), new Color(165, 206, 68) };
 
 	boolean mouseLeft;
-	boolean mouseRight;
+	boolean q;
 
 	boolean saving;
 	boolean loading;
@@ -61,17 +61,17 @@ public class MapEditor extends State {
 			mouseLeft = true;
 		}
 
-		if (!mouseRight && Mouse.buttonDown(Mouse.RIGHT)) {
+		if (!q && Keyboard.isKeyDown(KeyEvent.VK_Q)) {
 			special[Mouse.getX() / (H_SPACING)][Mouse.getY() / (V_SPACING)] = !special[Mouse
 					.getX() / (H_SPACING)][Mouse.getY() / (V_SPACING)];
-			mouseRight = true;
+			q = true;
 		}
 
 		if (!Mouse.buttonDown(Mouse.LEFT))
 			mouseLeft = false;
 
-		if (!Mouse.buttonDown(Mouse.RIGHT))
-			mouseRight = false;
+		if (!Keyboard.isKeyDown(KeyEvent.VK_Q))
+			q = false;
 
 		if (!saving && Keyboard.isKeyDown(KeyEvent.VK_S)) {
 			saving = true;
