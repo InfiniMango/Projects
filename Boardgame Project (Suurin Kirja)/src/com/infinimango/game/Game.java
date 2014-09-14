@@ -1,5 +1,7 @@
 package com.infinimango.game;
 
+import java.awt.MouseInfo;
+
 import com.infinimango.flux.Display;
 
 public class Game extends com.infinimango.flux.Game {
@@ -27,6 +29,7 @@ public class Game extends com.infinimango.flux.Game {
 		display.create();
 
 		Game.setState(new MapEditor());
+		System.out.println(MouseInfo.getNumberOfButtons());
 	}
 
 }
