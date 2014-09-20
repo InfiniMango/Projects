@@ -1,7 +1,5 @@
 package com.infinimango.game;
 
-import java.awt.MouseInfo;
-
 import com.infinimango.flux.Display;
 
 public class Game extends com.infinimango.flux.Game {
@@ -20,6 +18,7 @@ public class Game extends com.infinimango.flux.Game {
 		display.setSize(WIDTH, HEIGHT);
 		display.setScaling(SCALE);
 		display.setTitle("Flux Game");
+		display.setAutoSleep(true);
 
 		display.setTargetUPS(60);
 		display.setTargetFPS(60);
@@ -29,7 +28,6 @@ public class Game extends com.infinimango.flux.Game {
 		display.create();
 
 		Game.setState(new MapEditor());
-		System.out.println(MouseInfo.getNumberOfButtons());
 	}
 
 }

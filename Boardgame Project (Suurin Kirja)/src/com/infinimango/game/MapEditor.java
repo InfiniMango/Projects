@@ -20,8 +20,8 @@ public class MapEditor extends State {
 	public static final int WIDTH = 22;
 	public static final int HEIGHT = 13;
 
-	public static final int H_SPACING = 32;
-	public static final int V_SPACING = 24;
+	public static final int H_SPACING = 24;
+	public static final int V_SPACING = 20;
 
 	public int[][] data = new int[WIDTH][HEIGHT];
 	public boolean[][] special = new boolean[WIDTH][HEIGHT];
@@ -183,6 +183,41 @@ public class MapEditor extends State {
 
 		System.out.println("LOADED");
 	}
+
+	// TEMPORARY METHOD FOR OFFSETTING THE WHOLE MAP BY ONE
+	// private void shift() {
+	// File file = new File("map_load");
+	//
+	// System.out.println("SHIFTING...");
+	//
+	// FileInputStream s = null;
+	// try {
+	// s = new FileInputStream(file);
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// for (int y = 1; y < HEIGHT; y++) {
+	// for (int x = 1; x < WIDTH; x++) {
+	// try {
+	// data[x - 1][y] = s.read();
+	// special[x - 1][y] = s.read() == 1;
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	//
+	// try {
+	// s.close();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// save();
+	//
+	// System.out.println("SHIFTED!");
+	// }
 
 	@Override
 	public void render(Graphics g) {
