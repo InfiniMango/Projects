@@ -5,8 +5,8 @@ import com.infinimango.flux.Display;
 public class Game extends com.infinimango.flux.Game {
 	public static boolean debug = true;
 
-	public static final int WIDTH = 640;
-	public static final int HEIGHT = WIDTH / 4 * 3;
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = WIDTH / 8 * 5;
 	public static final int SCALE = 1;
 
 	/*
@@ -27,7 +27,7 @@ public class Game extends com.infinimango.flux.Game {
 
 		display.create();
 
-		Game.setState(new MapEditor());
+		Game.setState(new GameState());
 	}
 
 }
