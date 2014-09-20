@@ -32,6 +32,11 @@ public class GameState extends State {
 
 		background = Resource.loadImage("res/board.png");
 		map = new HexaMap("map_default", 22, 13, 48, 57);
+
+		Camera.setLimitLeft(0);
+		Camera.setLimitUp(0);
+		Camera.setLimitRight(background.getWidth() + Display.getWidth() / 4);
+		Camera.setLimitDown(background.getHeight() + Display.getHeight() / 4);
 	}
 
 	@Override
@@ -65,6 +70,8 @@ public class GameState extends State {
 		//
 		// if (Keyboard.isKeyDown(KeyEvent.VK_T))
 		// System.out.println("x: " + tx + " - y: " + ty);
+
+		Camera.update();
 
 	}
 
