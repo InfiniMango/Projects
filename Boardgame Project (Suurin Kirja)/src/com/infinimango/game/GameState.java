@@ -71,6 +71,8 @@ public class GameState extends State {
 		// if (Keyboard.isKeyDown(KeyEvent.VK_T))
 		// System.out.println("x: " + tx + " - y: " + ty);
 
+		map.update(92, 48);
+
 		Camera.update();
 
 	}
