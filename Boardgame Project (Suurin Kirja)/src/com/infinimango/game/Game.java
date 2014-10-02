@@ -23,6 +23,8 @@ public class Game extends com.infinimango.flux.Game {
 		display.setTargetUPS(60);
 		display.setTargetFPS(60);
 
+		display.setFullscreen(true);
+
 		display.showFPS(debug);
 
 		display.create();

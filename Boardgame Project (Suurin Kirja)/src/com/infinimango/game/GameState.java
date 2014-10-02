@@ -31,7 +31,7 @@ public class GameState extends State {
 		str = r.getContent();
 
 		background = Resource.loadImage("res/board.png");
-		map = new HexaMap("map_default", 22, 13, 48, 57);
+		map = new HexaMap("map_default", 22, 13, 48, 56);
 
 		Camera.setLimitLeft(0);
 		Camera.setLimitUp(0);
@@ -59,6 +59,12 @@ public class GameState extends State {
 		if (!Keyboard.isKeyDown(KeyEvent.VK_G))
 			togglePressed = false;
 
+		Camera.update();
+
+		if (Keyboard.isKeyDown(KeyEvent.VK_ESCAPE))
+			Display.close();
+		;
+
 		// if (Keyboard.isKeyDown(KeyEvent.VK_LEFT))
 		// tx--;
 		// if (Keyboard.isKeyDown(KeyEvent.VK_UP))
@@ -71,17 +77,14 @@ public class GameState extends State {
 		// if (Keyboard.isKeyDown(KeyEvent.VK_T))
 		// System.out.println("x: " + tx + " - y: " + ty);
 
-		map.update(92, 48);
-
-		Camera.update();
-
+		map.update(92, 50);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(background, -Camera.getX(), -Camera.getY(), null);
 		// map.render(tx, ty, g);
-		map.render(92, 49, g);
+		map.render(92, 50, g);
 
 		if (guiToggle) {
 			g.setColor(new Color(108, 72, 32));

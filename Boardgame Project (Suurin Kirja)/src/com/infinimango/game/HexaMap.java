@@ -18,6 +18,7 @@ public class HexaMap {
 	int hSpacing, vSpacing;
 
 	int highlightX, highlightY;
+	int selectedX, selectedY;
 
 	BufferedImage highlightImg;
 
@@ -29,6 +30,8 @@ public class HexaMap {
 			Resource.loadImage("res/hex_b_exl.png"),
 			Resource.loadImage("res/hex_g_exl.png"),
 			Resource.loadImage("res/hex_r_exl.png") };
+
+	int steps = 2;
 
 	public HexaMap(String path, int width, int height, int hSpacing,
 			int vSpacing) {
@@ -94,9 +97,11 @@ public class HexaMap {
 								int realX = Mouse.getX() - drawX;
 								int realY = Mouse.getY() - drawY;
 								if (!isOnImage(hexImg[data[x][y]], realX, realY)) {
-									System.out.println("this");
 									continue;
 								}
+
+								selectedX = x;
+								selectedY = y;
 
 								highlightX = drawX
 										+ hexImg[data[x][y]].getWidth() / 2
@@ -112,6 +117,12 @@ public class HexaMap {
 					highlightX = -100;
 					highlightY = -100;
 				}
+			}
+		}
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+
 			}
 		}
 	}
