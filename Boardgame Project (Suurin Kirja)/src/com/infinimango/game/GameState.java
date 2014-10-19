@@ -63,7 +63,6 @@ public class GameState extends State {
 
 		if (Keyboard.isKeyDown(KeyEvent.VK_ESCAPE))
 			Display.close();
-		;
 
 		// if (Keyboard.isKeyDown(KeyEvent.VK_LEFT))
 		// tx--;
@@ -76,6 +75,10 @@ public class GameState extends State {
 		//
 		// if (Keyboard.isKeyDown(KeyEvent.VK_T))
 		// System.out.println("x: " + tx + " - y: " + ty);
+
+		// Rectangle r = new Rectangle();
+		// boolean isMouseOnButton = r.contains(new Point(Mouse.getX(), Mouse
+		// .getY()));
 
 		map.update();
 	}
@@ -94,7 +97,30 @@ public class GameState extends State {
 			g.fillRect(0, h - h / 4, w, h / 4);
 		}
 
-		g.setColor(Color.white);
-		g.drawString(str, 20, 30);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 100);
+
+		if (HexaMap.one) {
+			g.setColor(Color.blue);
+			g.drawString("POINT 1 - BLUE IN x: " + HexaMap.oneX + ", y: "
+					+ HexaMap.oneY, 0, 20);
+		}
+
+		if (HexaMap.two) {
+			g.setColor(Color.red);
+			g.drawString("POINT 2 - RED IN x: " + HexaMap.twoX + ", y: "
+					+ HexaMap.twoY, 0, 40);
+		}
+
+		if (HexaMap.one && HexaMap.two) {
+			g.setColor(Color.white);
+			double dist = Math.sqrt(Math.abs(HexaMap.oneX - HexaMap.twoX)
+					+ Math.abs(HexaMap.oneY - HexaMap.twoY));
+			g.drawString("Distance in 2D: " + Math.ceil(dist + 1) + " (" + dist
+					+ ")", 0, 60);
+		}
+
+		// g.setColor(Color.white);
+		// g.drawString(str, 20, 30);
 	}
 }
