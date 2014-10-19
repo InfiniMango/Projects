@@ -17,7 +17,7 @@ public class Game extends com.infinimango.flux.Game {
 		Display display = new Display(new Game());
 		display.setSize(WIDTH, HEIGHT);
 		display.setScaling(SCALE);
-		display.setTitle("Flux Game");
+		display.setTitle("Suurin Kirja");
 		display.setAutoSleep(true);
 
 		display.setTargetUPS(60);
@@ -29,7 +29,7 @@ public class Game extends com.infinimango.flux.Game {
 
 		display.create();
 
-		Game.setState(new GameState());
+		Game.setState(new MapEditor());
 	}
 
 }

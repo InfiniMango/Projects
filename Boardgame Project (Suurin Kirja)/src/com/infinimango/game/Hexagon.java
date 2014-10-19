@@ -24,13 +24,38 @@ public class Hexagon {
 	public static final int TYPE_BLUE_EXL = 5;
 
 	float x, y;
+	int type;
 
 	boolean highlight;
 
 	public Hexagon(float x, float y, int type) {
 		this.x = x;
 		this.y = y;
+		this.type = type;
 
+		updateTexture();
+	}
+
+	public boolean getHover() {
+		float screenX = x - Camera.getX();
+		float screenY = y - Camera.getY();
+
+		if (Mouse.getX() > screenX && Mouse.getY() > screenY) {
+			if (Mouse.getX() < screenX + texture.getWidth()
+					&& Mouse.getY() < screenY + texture.getHeight()) {
+
+				int realX = (int) (Mouse.getX() - screenX);
+				int realY = (int) (Mouse.getY() - screenY);
+				if (texture.getRGB(realX, realY) >> 24 != 0x00) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public void updateTexture() {
 		switch (type) {
 		case TYPE_PINK:
 			texture = Resource.loadImage("res/hex_r.png");
@@ -56,23 +81,21 @@ public class Hexagon {
 		}
 	}
 
-	public boolean getHover() {
-		float screenX = x - Camera.getX();
-		float screenY = y - Camera.getY();
+	public void shiftColor(int shift) {
+		boolean special = type > 3;
 
-		if (Mouse.getX() > screenX && Mouse.getY() > screenY) {
-			if (Mouse.getX() < screenX + texture.getWidth()
-					&& Mouse.getY() < screenY + texture.getHeight()) {
+		type += shift;
 
-				int realX = (int) (Mouse.getX() - screenX);
-				int realY = (int) (Mouse.getY() - screenY);
-				if (texture.getRGB(realX, realY) >> 24 != 0x00) {
-					return true;
-				}
-			}
-		}
+		if (!special && type > 3)
+			type = 0;
+		if (type < 0)
+			type = 0;
+		if (special && type < 4)
+			type = 6;
+		if (type > 6)
+			type = 4;
 
-		return false;
+		updateTexture();
 	}
 
 	public int getWidth() {
