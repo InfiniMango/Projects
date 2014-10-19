@@ -1,11 +1,13 @@
 package com.infinimango.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 
 import com.infinimango.flux.Resource;
+import com.infinimango.flux.input.Mouse;
 
 public class HexaMap {
 	int width, height;
@@ -30,6 +32,9 @@ public class HexaMap {
 	Hexagon hexagon[][];
 
 	int x, y;
+
+	public static int oneX, twoX, oneY, twoY;
+	public static boolean one, two;
 
 	public HexaMap(int x, int y, String path, int width, int height,
 			float hSpacing, float vSpacing) {
@@ -107,12 +112,26 @@ public class HexaMap {
 			hexagon[x][y + 1].setHighlight(true);
 	}
 
+	// public List<Hexagon> getNeighbors(){
+	// List<Hexagon> neighbors = new ArrayList<Hexagon>();
+	// }
+
 	public void update() {
 		clearHighlights();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				if (hexagon[x][y] != null && hexagon[x][y].getHover()) {
-					highlight(x, y, 0);
+					highlight(x, y, 3);
+					if (Mouse.buttonDown(Mouse.LEFT)) {
+						one = true;
+						oneX = x;
+						oneY = y;
+					}
+					if (Mouse.buttonDown(Mouse.RIGHT)) {
+						two = true;
+						twoX = x;
+						twoY = y;
+					}
 					return;
 				}
 			}
@@ -124,6 +143,20 @@ public class HexaMap {
 			for (int x = 0; x < width; x++) {
 				if (hexagon[x][y] != null)
 					hexagon[x][y].render(g);
+				if (one && oneX == x && oneY == y) {
+					g.setColor(Color.BLUE);
+					g.fillRect(
+							(int) (this.x + x * hSpacing) + 15,
+							(int) (this.y + y * vSpacing + (x % 2 == 1 ? 30 : 0)) + 15,
+							32, 32);
+				}
+				if (two && twoX == x && twoY == y) {
+					g.setColor(Color.RED);
+					g.fillRect(
+							(int) (this.x + x * hSpacing) + 15,
+							(int) (this.y + y * vSpacing + (x % 2 == 1 ? 30 : 0)) + 15,
+							32, 32);
+				}
 			}
 		}
 	}
