@@ -29,7 +29,7 @@ public class Game extends com.infinimango.flux.Game {
 
 		display.create();
 
-		Game.setState(new GameState());
+		Game.setState(new MapEditor());
 	}
 
 }

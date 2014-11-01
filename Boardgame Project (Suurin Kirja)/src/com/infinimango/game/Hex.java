@@ -36,33 +36,32 @@ public class Hex extends Entity {
 		this.color = color;
 		this.special = special;
 		this.location = location;
-		setTexture(textures[color + (special ? 2 : 0)]);
+		setTexture(textures[color + (special ? 3 : 0)]);
+	}
+
+	public Hex(float x, float y, BufferedImage texture, Point3D location) {
+		super(x, y);
+		color = 0;
+		this.location = location;
+		setTexture(texture);
 	}
 
 	public void shiftColor(int shift) {
 		color += shift;
 		color = color > 2 ? 0 : color;
 		color = color < 0 ? 2 : color;
-		setTexture(textures[color + (special ? 2 : 0)]);
+		setTexture(textures[color + (special ? 3 : 0)]);
 	}
 
 	public boolean getHover() {
-		// TODO OPTIMIZE ME!
-		float screenX = x - Camera.getX();
-		float screenY = y - Camera.getY();
-
-		if (Mouse.getX() > screenX && Mouse.getY() > screenY) {
-			if (Mouse.getX() < screenX + getTexture().getWidth()
-					&& Mouse.getY() < screenY + getTexture().getHeight()) {
-
-				int realX = (int) (Mouse.getX() - screenX);
-				int realY = (int) (Mouse.getY() - screenY);
-				if (getTexture().getRGB(realX, realY) >> 24 != 0x00) {
-					return true;
-				}
+		int hoverX = Mouse.getX() + Camera.getX();
+		int hoverY = Mouse.getY() + Camera.getY();
+		if (this.includes(hoverX, hoverY)) {
+			if (getTexture().getRGB(Mouse.getX() - getScreenX(),
+					Mouse.getY() - getScreenY()) >> 24 != 0x00) {
+				return true;
 			}
 		}
-
 		return false;
 	}
 
