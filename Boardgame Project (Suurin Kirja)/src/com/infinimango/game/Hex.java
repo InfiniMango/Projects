@@ -2,13 +2,18 @@ package com.infinimango.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import com.infinimango.flux.Resource;
 import com.infinimango.flux.input.Mouse;
 import com.infinimango.flux.world.Camera;
 import com.infinimango.flux.world.entity.Entity;
 
-public class Hex extends Entity {
+public class Hex extends Entity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1182201815920324298L;
 	int color;
 	public static final int RED = 0;
 	public static final int GREEN = 1;
@@ -48,11 +53,31 @@ public class Hex extends Entity {
 
 	public void shiftColor(int shift) {
 		color += shift;
-		color = color > 2 ? 0 : color;
-		color = color < 0 ? 2 : color;
+		color = (((color % 3) + 3) % 3);
+		updateTexture();
+	}
+	
+	public void updateTexture(){
 		setTexture(textures[color + (special ? 3 : 0)]);
 	}
+	
+	public void setSpecial(boolean special){
+		this.special = special;
+		updateTexture();
+	}
 
+	public boolean isSpecial(){
+		return special;
+	}
+	
+	public void toggleSpecial(){
+		setSpecial(!special);
+	}
+	
+	public int getColor(){
+		return color;
+	}
+	
 	public boolean getHover() {
 		int hoverX = Mouse.getX() + Camera.getX();
 		int hoverY = Mouse.getY() + Camera.getY();

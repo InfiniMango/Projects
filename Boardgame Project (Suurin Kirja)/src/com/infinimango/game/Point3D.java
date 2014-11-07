@@ -1,6 +1,11 @@
 package com.infinimango.game;
 
-public class Point3D {
+import java.io.Serializable;
+
+public class Point3D implements Serializable {
+
+	private static final long serialVersionUID = 377402300267674221L;
+
 	int x, y, z;
 
 	public Point3D(int x, int y, int z) {
