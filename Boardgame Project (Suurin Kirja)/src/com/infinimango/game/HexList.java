@@ -85,4 +85,10 @@ public class HexList extends ArrayList<Hex> {
 			hex.setY(hex.getY() + y);
 		}
 	}
+	
+	public void addSpacingX(float x){
+		for (Hex hex : this) {
+			hex.setX((int)(hex.getX() + hex.getLocation().getX() * x));
+		}
+	}
 }

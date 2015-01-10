@@ -1,6 +1,9 @@
 package com.infinimango.game;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
@@ -28,8 +31,11 @@ public class Hex extends Entity implements Serializable {
 			Resource.loadImage("res/hex_b_exl.png") };
 
 	private static final BufferedImage selectionTexture = Resource
-			.loadImage("res/hex_hl.png");
+			.loadImage("res/hex_w2.png");
 
+	private static float sAlpha = 0.5f;
+	public static boolean glowUp = false;
+	
 	boolean special;
 
 	Point3D location;
@@ -93,11 +99,32 @@ public class Hex extends Entity implements Serializable {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
+		
+		sAlpha += glowUp? 0.0001f : -0.0001f;
+		
+		if(sAlpha > 0.6f && glowUp) {
+			glowUp = false;
+			sAlpha = 0.6f;
+		}
+		if(sAlpha < 0.2f && !glowUp) {
+			glowUp = true;
+			sAlpha = 0.2f;
+		}
+		
 		if (selected) {
-			g.drawImage(selectionTexture, getScreenX(), getScreenY(), null);
+			alphaRender(selectionTexture, getScreenX(), getScreenY(), g);
 		}
 	}
 
+	private void alphaRender(BufferedImage img, int x, int y, Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				sAlpha));
+		g2.drawImage(img, x, y, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				1));
+	}
+	
 	public Point3D getLocation() {
 		return location;
 	}

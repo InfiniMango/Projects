@@ -46,8 +46,8 @@ public class Player{
 		int dx = (int)(Math.abs(hex.getX() - rx));
 		int dy = (int)(Math.abs(hex.getY() - ry));
 		if(dx > 0 || dy > 0){
-			rx += (hex.getX() - rx) / 8;
-			ry += (hex.getY() - ry) / 8;
+			rx += (hex.getX() - rx) / 6;
+			ry += (hex.getY() - ry) / 6;
 		}else{
 			rx = hex.getX();
 			ry = hex.getY();
